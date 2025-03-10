@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+
+class Jugador
+{
+    public string Nombre { get; set; }
+    public string Posicion { get; set; }
+    public int Goles { get; set; }
+    public int Tarjetas { get; set; }
+
+    public Jugador(string nombre, string posicion)
+    {
+        Nombre = nombre;
+        Posicion = posicion;
+        Goles = 0;
+        Tarjetas = 0;
+    }
+}
+
+class Equipo
+{
+    public string Nombre { get; set; }
+    public List<Jugador> Jugadores { get; set; }
+
+    public Equipo(string nombre)
+    {
+        Nombre = nombre;
+        Jugadores = new List<Jugador>();
+    }
+
+    public void RegistrarJugador(Jugador jugador)
+    {
+        Jugadores.Add(jugador);
+    }
+
+    public void MostrarEquipo()
+    {
+        Console.WriteLine("Equipo: " + Nombre);
+        foreach (var jugador in Jugadores)
+        {
+            Console.WriteLine($"Jugador: {jugador.Nombre}, Posición: {jugador.Posicion}, Goles: {jugador.Goles}, Tarjetas: {jugador.Tarjetas}");
+        }
+    }
+}
+
+class Torneo
+{
+    public Dictionary<string, Equipo> Equipos { get; set; }
+
+    public Torneo()
+    {
+        Equipos = new Dictionary<string, Equipo>();
+    }
+
+    public void RegistrarEquipo(Equipo equipo)
+    {
+        Equipos[equipo.Nombre] = equipo;
+    }
+
+    public void MostrarEquipos()
+    {
+        foreach (var equipo in Equipos.Values)
+        {
+            equipo.MostrarEquipo();
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Torneo torneo = new Torneo();
+
+        // Registro de equipos
+        Equipo equipo1 = new Equipo("Real Madrid");
+        Equipo equipo2 = new Equipo("Barcelona");
+
+        // Registro de jugadores
+        Jugador jugador1 = new Jugador("Cristiano Ronaldo", "Delantero");
+        Jugador jugador2 = new Jugador("Lionel Messi", "Delantero");
+
+        equipo1.RegistrarJugador(jugador1);
+        equipo2.RegistrarJugador(jugador2);
+
+        // Registrar equipos al torneo
+        torneo.RegistrarEquipo(equipo1);
+        torneo.RegistrarEquipo(equipo2);
+
+        // Mostrar equipos y jugadores
+        torneo.MostrarEquipos();
+    }
+}
